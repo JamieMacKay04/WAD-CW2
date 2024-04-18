@@ -88,19 +88,9 @@ nav a.active {
     text-decoration: underline; /* Underline active text */
 }
 
-/* Main content area with icons */
-main {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 50px;
-    box-sizing: border-box;
-}
-
 /* Footer styles */
 footer {
     position: absolute;
-    bottom: 0;
     width: 100%;
     background-color: white;
     color: white;
@@ -108,4 +98,50 @@ footer {
     padding: 10px 0;
 }
 
-p { color: black;}
+footer p { color: black;}
+
+.logo-container {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    margin: 10px; /* Adjust margin as needed */
+}
+
+.logo-container img {
+    width: 100px; /* Adjust width as needed */
+    height: auto;
+}
+
+.icons{
+    width:100%;
+    display: flex;
+    margin: 18rem 13rem;
+}
+
+#icon{
+
+    margin: 0 3rem;
+    padding: 2rem 1rem;
+    padding-bottom: 3rem;
+    background-color:rgba(58, 97, 100, 0.8);
+    text-align: center;
+}
+
+h2{
+    font-size: 3em;
+    color:white;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+#icon a {
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Add this CSS to your home.css file */
+
+#icon h2 {
+    margin-top: 10px; /* Adjust the margin as needed */
+}

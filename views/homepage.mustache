@@ -9,6 +9,10 @@
 <body>
     <div class="background">
         <header>
+        <div class="logo-container">
+            <img src="images/Logo.png" alt="Logo">
+        </div>
+
             <nav>
                 <ul>
                     <li><a class="{{#isHome}}active{{/isHome}}" href="/">Home</a></li>
@@ -19,7 +23,36 @@
                 </ul>
             </nav>
         </header>
-        <main>
+
+<div class="icons">
+<div id="icon">
+    <a href="/about">
+        <img src="/images/about.png" alt="About Us">
+        <br><br>
+        <h2>About Us</h2>
+    </a>
+</div>
+<div id="icon">
+    <a href="/contact">
+        <img src="/images/contact.png" alt="Contact Us">
+        <h2>Contact Us</h2>
+    </a>
+</div>
+<div id="icon">
+    <a href="/pantry">
+        <img src="/images/pantry.png" alt="Pantry">
+        <h2>Pantry</h2>
+    </a>
+</div>
+<div id="icon">
+    <a href="/profile">
+        <img src="/images/profile.png" alt="Profile">
+        <h2>Profile</h2>
+    </a>
+</div>
+</div>
+
+
     </div>
     <footer>
         <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
