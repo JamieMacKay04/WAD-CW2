@@ -1,0 +1,146 @@
+/* Reset and variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #3A6164; /* Teal color */
+    --secondary-color: #67afb6; /* Light teal color */
+}
+
+/* Basic styles */
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primary-color);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header, footer {
+    background-color: white;
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 10;
+}
+
+header {
+    top: 0;
+}
+
+footer {
+    bottom: 0;
+    color: black;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Navigation bar styles */
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    margin: 0 3rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.5em;
+    transition: color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Logo styles */
+.logo-container {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+}
+
+.logo-container img {
+    width: 100px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 9rem; /* Increased width for larger images */
+    height: auto;
+}
+
+.left {
+    left: 1rem;
+}
+
+.right {
+    right: 1rem;
+}
+
+.logo-container {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    margin: 10px; /* Adjust margin as needed */
+}
+
+.logo-container img {
+    width: 100px; /* Adjust width as needed */
+    height: auto;
+}
+
+img {
+    padding-top: 10rem;
+    width: 100%;
+    display: block;
+}
+
+.centered-image img {
+    display: block; /* Remove any extra space below the image */
+    width: 70rem; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    position: absolute; /* Ensures positioning relative to the nearest positioned ancestor */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Align the center of the element with the center of the container */
+    z-index: 5; /* Ensure it's visible above other positioned elements but below overlays if any */
+}
+
+img.centered {
+    display: block; /* Remove any extra space below the image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.image-text {
+    position: absolute; /* Absolute positioning relative to the parent */
+    top: 55%; /* Vertically center */
+    left: 50%; /* Horizontally center */
+    transform: translate(-50%, -50%); /* Perfect centering */
+    color: white; /* Text color */
+    font-size: 2rem; /* Font size */
+    font-weight: bold; /* Font weight */
+    text-align: center; /* Align text */
+    z-index: 10; /* Ensures text is above the image */
+}

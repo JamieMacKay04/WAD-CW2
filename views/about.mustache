@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/styles/home.css">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles/about.css">
 </head>
 <body>
-    <div class="background">
-        <header>
-        <div class="logo-container">
-            <img src="images/Logo.png" alt="Logo">
+    <header>
         </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a class="{{#isAbout}}active{{/isAbout}}" href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/pantry">Pantry</a></li>
+                <li><a href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a class="{{#isAbout}}active{{/isAbout}}" href="/about">About Us</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/pantry">Pantry</a></li>
-                    <li><a href="/profile">Profile</a></li>
-                </ul>
-            </nav>
-        </header>
-    <footer>
-        <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-    </footer>
+    <div class="sidebar left">
+        <img src="images/partnersLeft.png" alt="Partner Left">
+    </div>
+
+<div class="centered-image">
+    <img src="images/aboutBack.png" alt="Center Background">
+    <p class="image-text">The Scottish Pantry Network (TSPN) is an embodiment of community strength and commitment to combating food insecurity amidst the escalating cost of living. We originated from the simple belief that while the Earth yields plenty, no one should go hungry. Our mission transcends the mere distribution of food; it's about nurturing a sense of community, fostering sustainability, and championing the dignity that comes with access to nutritious food.
+                        Born from the collaborative spirit of Glasgow's community gardens, schools, and countless individuals dedicated to growing wholesome food, TSPN has evolved into a robust network. Our platform is a testament to the power of collective effort. It serves as a conduit between abundance and need, allowing those with surplus produce to connect with local food pantries that provide affordable food
+
+</p>
+</div>
+
+
+
+    <div class="sidebar right">
+        <img src="images/partnersRight.png" alt="Partner Right">
+    </div>
+
     <script src="/scripts/main.js"></script>
 </body>
 </html>
