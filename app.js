@@ -14,16 +14,60 @@ app.use('/css', express.static('public/styles'));
 app.use('/scripts', express.static('public/scripts'));
 
 // Homepage route
-// Homepage route
 app.get('/', (req, res) => {
     res.render('homepage', {
         pageTitle: 'Home',
         currentYear: new Date().getFullYear(),
         organizationName: 'Your Organization',
-        isHome: true // Set isHome to true for the homepage
+        isHome: true
     });
 });
 
+// About Page Route
+app.get('/about', (req, res) => {
+    res.render('about', {
+        pageTitle: 'About Us',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isAbout: true
+    });
+});
+
+// Contact Page Route
+app.get('/contact', (req, res) => {
+    res.render('contact', {
+        pageTitle: 'Contact Us',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isContact: true
+    });
+});
+
+// Pantry Page Route
+app.get('/pantry', (req, res) => {
+    res.render('pantry', {
+        pageTitle: 'Pantry',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isPantry: true
+    });
+});
+
+// Profile Page Route
+app.get('/profile', (req, res) => {
+    res.render('profile', {
+        pageTitle: 'Profile',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isProfile: true
+    });
+});
+
+app.use((req, res, next) => {
+    res.status(404).render('lost', {
+        pageTitle: '404 Not Found'
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

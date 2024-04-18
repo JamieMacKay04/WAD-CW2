@@ -1,0 +1,23 @@
+h1 {
+
+    font-size: 4rem;
+    color: var(--primary-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+body {
+    
+    text-align: center;
+
+}
+
+:root {
+    --primary-color: #3A6164; /* Teal color */
+    --secondary-color: #67afb6; /* Light teal color */
+}
+
+img {
+    
+
+}
