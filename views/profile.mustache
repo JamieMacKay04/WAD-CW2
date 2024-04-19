@@ -25,16 +25,16 @@
     <div id="profileContainer">
         <div id="profileCard">
             <img src="/images/edit-icon.png" alt="Edit" class="edit-icon">
-            <h2>UserName</h2>
+            <h2>{{fullName}}</h2> <!-- Insert the user's full name here -->
             <br>
-            <p>Email Address</p>
+            <p>{{email}}</p> <!-- Insert the user's email here -->
             <br>
-            <span>UserType</span>
+            <span>{{userType}}</span> <!-- Assuming you also pass userType -->
+        </div>
     </div>
+
     <footer>
         <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-
-
     </footer>
     <script src="/scripts/main.js"></script>
 </body>

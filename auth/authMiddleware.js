@@ -20,6 +20,6 @@ app.get('/new-entry', verify, (req, res) => {
     // Route that allows users to write a new entry in the guestbook
 });
 
-app.get('/logout', (req, res) => {
+app.get('/', (req, res) => {
     res.clearCookie('jwt').redirect('/'); // Clears the JWT cookie and redirects to the home page
 });

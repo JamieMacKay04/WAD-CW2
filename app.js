@@ -1,46 +1,100 @@
 const express = require('express');
 const mustacheExpress = require('mustache-express');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const UserDAO = require('./models/userModel');
+require('dotenv').config();
+const session = require('express-session');
 
 const app = express();
 
-// Mustache Express setup
+// Use bodyParser middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: 'key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+
+// Set up static file serving and view engine
+app.use(express.static('public'));
+app.use('/css', express.static('public/styles'));
+app.use('/scripts', express.static('public/scripts'));
+
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
-// Serve static files
-app.use(express.static('public')); // Simplified to serve everything under 'public'
-app.use('/css', express.static('public/styles'));
-app.use('/scripts', express.static('public/scripts'));
-
-
-// Login route
+// Route to display the login form
 app.get('/', (req, res) => {
     res.render('login', {
         pageTitle: 'Login',
         currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-        isHome: true
+        organizationName: 'Your Organization'
     });
 });
 
-// Homepage route
+app.post('/', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    UserDAO.lookup(email, (err, user) => {
+        if (err) {
+            // Handle the error, log it for debugging
+            console.error('Login error:', err);
+            res.status(500).send("Internal Server Error");
+        } else if (!user) {
+            // No user found with this email
+            res.status(401).send("Invalid credentials");
+        } else {
+            // User found, compare the plaintext passwords
+            if (password === user.password) {
+                // Passwords match, redirect to homepage
+                res.redirect('/homepage');
+            } else {
+                // Passwords don't match
+                res.status(401).send("Invalid credentials");
+            }
+        }
+    });
+});
+
+// Route to display the registration form
 app.get('/register', (req, res) => {
     res.render('register', {
         pageTitle: 'Register',
         currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-        isHome: true
+        organizationName: 'Your Organization'
     });
 });
 
 app.post('/register', (req, res) => {
-    const username = req.body.username;
+
+    const fullName = req.body.name;
+    const email = req.body.email;
     const password = req.body.password;
 
+    // Before attempting to create a user, log the data to ensure it's being received correctly
+    console.log('Received registration attempt:', { fullName, email });
+
+    UserDAO.create(fullName, email, password, (err, newUser) => {
+        if (err) {
+            console.error('Error during user registration:', err);
+            // Respond with a detailed error message
+            // Note: In a production environment, you might want to avoid sending detailed error information to the client
+            res.status(500).send(`Internal Server Error: ${err.message}`);
+        } else {
+            console.log('New user registered:', newUser);
+            // Redirect to the home page or a success page
+            res.redirect('/');
+        }
+    });
 });
 
-// Homepage route
+// Additional routes: About, Contact, Pantry, Profile, etc.
 app.get('/homepage', (req, res) => {
     res.render('homepage', {
         pageTitle: 'Home',
@@ -50,7 +104,6 @@ app.get('/homepage', (req, res) => {
     });
 });
 
-// About Page Route
 app.get('/about', (req, res) => {
     res.render('about', {
         pageTitle: 'About Us',
@@ -60,7 +113,6 @@ app.get('/about', (req, res) => {
     });
 });
 
-// Contact Page Route
 app.get('/contact', (req, res) => {
     res.render('contact', {
         pageTitle: 'Contact Us',
@@ -70,7 +122,6 @@ app.get('/contact', (req, res) => {
     });
 });
 
-// Pantry Page Route
 app.get('/pantry', (req, res) => {
     res.render('pantry', {
         pageTitle: 'Pantry',
@@ -80,93 +131,36 @@ app.get('/pantry', (req, res) => {
     });
 });
 
-// Profile Page Route
 app.get('/profile', (req, res) => {
-    res.render('profile', {
-        pageTitle: 'Profile',
-        currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-        isProfile: true
-    });
-});
-
-// This route shows the registration form
-app.get('/register', (req, res) => {
-    res.render('user/register', {
-        pageTitle: 'Register',
-        currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-    });
-});
-
-// This route processes the registration form
-app.post('/register', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    
-    // First, let's check if the user already exists
-    UserDAO.lookup(username, (err, user) => {
-        if (err) {
-            // Handle error case (e.g., database error)
-            return res.status(500).send("Internal server error.");
-        }
-        if (user) {
-            // User already exists
-            return res.status(409).send("User already exists.");
-        }
-
-        // User doesn't exist, hash the password and create the user
-        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    if (req.session && req.session.userID) {
+        UserDAO.lookup(req.session.userID, (err, user) => {
             if (err) {
-                // Handle error case (e.g., hashing failed)
-                return res.status(500).send("Internal server error.");
+                console.error('Error fetching user:', err);
+                res.status(500).send("Internal Server Error");
+                return;
             }
 
-            // Create new user with hashed password
-            UserDAO.create(username, hashedPassword, (err, newUser) => {
-                if (err) {
-                    // Handle error case (e.g., user creation failed)
-                    return res.status(500).send("Internal server error.");
-                }
-                // User successfully created
-                return res.status(201).send("User created.");
+            if (!user) {
+                res.status(404).send("User not found");
+                return;
+            }
+
+            // If user is found, render the profile page with user data
+            res.render('profile', {
+                pageTitle: 'Your Profile',
+                fullName: user.fullName,
+                email: user.email,
+                userType: user.userType || 'Standard' // default to 'Standard' if userType is not defined
             });
         });
-    });
+    } else {
+        // If no userID in session, redirect to login page
+        res.redirect('/');
+    }
 });
 
-const bodyParser = require('body-parser');
-require('dotenv').config(); // Ensure you have a .env file at your project root
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-const UserDAO = require('./models/userModel'); // Adjust the path to where your userModel is located
-
-app.post('/register', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    // Check if the user already exists
-    UserDAO.lookup(username, (err, user) => {
-        if (user) {
-            // User already exists, handle accordingly
-            res.status(409).send('User already exists.');
-        } else {
-            // No user found, proceed to create a new user
-            UserDAO.create(username, password);
-            res.redirect('/login'); // Redirect to the login page after registration
-        }
-    });
-});
-
-app.get('/login', (req, res) => {
-    res.render('user/login', {
-        pageTitle: 'Login',
-        currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-    });
-});
-
+// Start the server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
