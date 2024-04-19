@@ -118,22 +118,31 @@ footer p { color: black;}
     margin: 18rem 13rem;
 }
 
-#icon{
-
+#icon {
     margin: 0 3rem;
     padding: 2rem 1rem;
     padding-bottom: 3rem;
-    background-color:rgba(58, 97, 100, 0.8);
+    background-color: rgba(58, 97, 100, 0.8);
     text-align: center;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for transform */
 }
 
-h2{
+#icon:hover {
+    transform: scale(1.1); /* Scale up the box by 10% on hover */
+}
+
+h2 {
     font-size: 3em;
-    color:white;
+    color: white;
     padding: 1rem;
     background-color: var(--secondary-color);
     border-radius: 10px;
     text-decoration: none;
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+h2:hover {
+    background-color: var(--primary-color); /* Change background color on hover */
 }
 
 #icon a {

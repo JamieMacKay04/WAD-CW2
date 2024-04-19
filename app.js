@@ -13,11 +13,16 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'key',
+    secret: 'your_secret_key',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    saveUninitialized: false,
+    cookie: {
+        secure: false, // Should be true if you're using HTTPS
+        httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
+        maxAge: 1000 * 60 * 60 // Sets the cookie to expire after 1 hour
+    }
 }));
+
 
 // Set up static file serving and view engine
 app.use(express.static('public'));
@@ -43,24 +48,21 @@ app.post('/', (req, res) => {
 
     UserDAO.lookup(email, (err, user) => {
         if (err) {
-            // Handle the error, log it for debugging
             console.error('Login error:', err);
             res.status(500).send("Internal Server Error");
         } else if (!user) {
-            // No user found with this email
             res.status(401).send("Invalid credentials");
         } else {
-            // User found, compare the plaintext passwords
-            if (password === user.password) {
-                // Passwords match, redirect to homepage
+            if (password === user.password) { // Assuming plain text comparison
+                req.session.email = user.email; // Setting the email in session
                 res.redirect('/homepage');
             } else {
-                // Passwords don't match
                 res.status(401).send("Invalid credentials");
             }
         }
     });
 });
+
 
 // Route to display the registration form
 app.get('/register', (req, res) => {
@@ -94,14 +96,19 @@ app.post('/register', (req, res) => {
     });
 });
 
-// Additional routes: About, Contact, Pantry, Profile, etc.
 app.get('/homepage', (req, res) => {
-    res.render('homepage', {
-        pageTitle: 'Home',
-        currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-        isHome: true
-    });
+    console.log('Session:', req.session);
+    if (!req.session.email) {
+        console.log('Redirecting to login because no user ID in session.');
+        res.redirect('/');
+    } else {
+        res.render('homepage', {
+            pageTitle: 'Home',
+            currentYear: new Date().getFullYear(),
+            organizationName: 'Your Organization',
+            isHome: true
+        });
+    }
 });
 
 app.get('/about', (req, res) => {
@@ -132,8 +139,8 @@ app.get('/pantry', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-    if (req.session && req.session.userID) {
-        UserDAO.lookup(req.session.userID, (err, user) => {
+    if (req.session && req.session.email) {  // Check if session email exists
+        UserDAO.lookup(req.session.email, (err, user) => {  // Use email to lookup user
             if (err) {
                 console.error('Error fetching user:', err);
                 res.status(500).send("Internal Server Error");
@@ -150,14 +157,15 @@ app.get('/profile', (req, res) => {
                 pageTitle: 'Your Profile',
                 fullName: user.fullName,
                 email: user.email,
-                userType: user.userType || 'Standard' // default to 'Standard' if userType is not defined
+                userType: user.userType || 'Standard' // Default to 'Standard' if userType is not defined
             });
         });
     } else {
-        // If no userID in session, redirect to login page
+        // If no email in session, redirect to login page
         res.redirect('/');
     }
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
