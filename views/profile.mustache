@@ -3,29 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/styles/home.css">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <body>
-    <div class="background">
-        <header>
+    <header>
         <div class="logo-container">
-            <img src="images/Logo.png" alt="Logo">
+            <img src="/images/Logo.png" alt="Logo">
         </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/pantry">Pantry</a></li>
+                <li><a class="active" href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/pantry">Pantry</a></li>
-                    <li><a class="{{#isProfile}}active{{/isProfile}}" href="/profile">Profile</a></li>
-                </ul>
-            </nav>
-        </header>
+    <div id="profileContainer">
+        <div id="profileCard">
+            <img src="/images/edit-icon.png" alt="Edit" class="edit-icon">
+            <h2>UserName</h2>
+            <br>
+            <p>Email Address</p>
+            <br>
+            <span>UserType</span>
 
-            <footer>
+                    <div class="text-right" style="margin-bottom: 1em;">
+        {{^user}}
+        <a id="login" href="/register" class="btn btn-primary">
+            <br><br>
+        Register
+        </a>
+        <a id="login" href="/login" class="btn btn-primary">
+        Sign in
+         </a>
+        {{/user}}
+        {{#user}}
+        <a id="logout" href="/logout" class="btn btn-primary">
+         Sign out
+        </a>
+        {{/user}}
+        </div>
+        </div>
+    </div>
+
+    <footer>
         <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
+
+
     </footer>
     <script src="/scripts/main.js"></script>
 </body>

@@ -15,38 +15,47 @@ body, html {
     width: 100%;
     height: 100%;
     font-family: 'Arial', sans-serif;
-    background-color: var(--primary-color);
-    position: relative;
-    min-height: 100vh;
-    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/images/homeBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Keeps the background image fixed during scroll */
+    position: relative; /* Sets positioning context for absolute children */
+    min-height: 100vh; /* Ensures at least the full height of the viewport */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Positions header and footer at start and end of page */
 }
 
 header, footer {
     background-color: white;
     width: 100%;
-    height: 15%;
+    height: 15%; /* Sets the height to 15% of the viewport */
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    z-index: 10;
+    position: absolute; /* Positions the bars absolutely within the body */
+    z-index: 10; /* Ensures the bars overlap the background image */
 }
 
 header {
-    top: 0;
+    top: 0; /* Aligns the header to the top of the page */
 }
 
 footer {
-    bottom: 0;
-    color: black;
-    text-align: center;
-    padding: 10px 0;
+    bottom: 0; /* Aligns the footer to the bottom of the page */
 }
 
 /* Navigation bar styles */
+nav {
+     /* Use the primary color variable for background */
+    position: relative;
+}
+
 nav ul {
     list-style-type: none;
     display: flex;
@@ -57,37 +66,47 @@ nav ul {
 }
 
 nav li {
-    margin: 0 3rem;
+    margin: 0 3rem; /* Space between menu items */
 }
 
 nav a {
     text-decoration: none;
-    color: black;
+    color: rgb(0, 0, 0);
     font-size: 1.5em;
-    transition: color 0.3s;
+    transition: color 0.3s; /* Smooth transition for hover effect */
+    position: relative;
+    left: 19rem; /* Move the text to the right by 50% of its container width */
+    transform: translateX(-50%); /* Center the text horizontally */
 }
 
-nav a:hover, nav a.active {
-    color: var(--primary-color);
-    text-decoration: underline;
+nav a:hover {
+    color: var(--secondary-color); /* Color change on hover */
 }
+
+nav a.active {
+    color: var(--primary-color); /* Set active text color to primary color */
+    text-decoration: underline; /* Underline active text */
+}
+
 
 /* Logo styles */
 .logo-container {
     position: absolute;
     top: 1rem;
     left: 2rem;
+    margin: 10px;
 }
 
 .logo-container img {
     width: 100px;
+    height: auto;
 }
 
 .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 9rem; /* Increased width for larger images */
+    width: 9rem;
     height: auto;
 }
 
@@ -99,18 +118,6 @@ nav a:hover, nav a.active {
     right: 1rem;
 }
 
-.logo-container {
-    position: absolute;
-    top: 1rem;
-    left: 2rem;
-    margin: 10px; /* Adjust margin as needed */
-}
-
-.logo-container img {
-    width: 100px; /* Adjust width as needed */
-    height: auto;
-}
-
 img {
     padding-top: 10rem;
     width: 100%;
@@ -118,29 +125,24 @@ img {
 }
 
 .centered-image img {
-    display: block; /* Remove any extra space below the image */
-    width: 70rem; /* Maintain aspect ratio */
-    height: auto; /* Maintain aspect ratio */
-    position: absolute; /* Ensures positioning relative to the nearest positioned ancestor */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Align the center of the element with the center of the container */
-    z-index: 5; /* Ensure it's visible above other positioned elements but below overlays if any */
-}
-
-img.centered {
-    display: block; /* Remove any extra space below the image */
-    height: auto; /* Maintain aspect ratio */
+    display: block;
+    width: 70rem;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
 }
 
 .image-text {
-    position: absolute; /* Absolute positioning relative to the parent */
-    top: 55%; /* Vertically center */
-    left: 50%; /* Horizontally center */
-    transform: translate(-50%, -50%); /* Perfect centering */
-    color: white; /* Text color */
-    font-size: 2rem; /* Font size */
-    font-weight: bold; /* Font weight */
-    text-align: center; /* Align text */
-    z-index: 10; /* Ensures text is above the image */
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
 }
