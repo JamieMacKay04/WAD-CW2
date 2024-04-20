@@ -5,31 +5,49 @@ const path = require('path');
 
 class UserDAO {
     constructor(dbFilePath) {
-        // if a database file path is provided, it uses it; otherwise, it creates an in-memory datastore
         if (dbFilePath) {
-            // Persistent datastore with automatic loading
             this.db = new Datastore({ filename: dbFilePath, autoload: true });
         } else {
-            // In-memory datastore
             this.db = new Datastore();
         }
     }
 
-    // Seed the database with some initial users
     init() {
         const users = [
-            { fullname: 'test1', email: 'test.mail' , password: 'test3'},
+            { fullname: 'test1', email: 'test.mail', password: 'test3' }
         ];
 
         users.forEach((user) => {
-            this.db.insert(user, function (err) {
+            this.lookup(user.email, (err, foundUser) => {
                 if (err) {
-                    console.log('Cannot insert user:', user.username);
+                    console.error('Error checking user existence:', err);
+                } else if (!foundUser) {
+                    // Only insert if the user does not already exist
+                    this.db.insert(user, function (err) {
+                        if (err) {
+                            console.log('Cannot insert user:', user.fullname);
+                        } else {
+                            console.log('User inserted:', user.fullname);
+                        }
+                    });
+                } else {
+                    console.log('User already exists:', user.fullname);
                 }
             });
         });
     }
 
+    lookup(email, callback) {
+        this.db.find({ email: email }, function (err, users) {
+            if (err) {
+                callback(err, null);
+            } else if (users.length > 0) {
+                callback(null, users[0]); // returns the first user found
+            } else {
+                callback(null, null); // No user found
+            }
+        });
+    }
     // Method to create a new user
     create(fullName, email, password, callback) {
         // First, let's check if the email is already used by another user
