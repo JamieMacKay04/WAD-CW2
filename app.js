@@ -82,7 +82,7 @@ app.post('/register', (req, res) => {
     // Before attempting to create a user, log the data to ensure it's being received correctly
     console.log('Received registration attempt:', { fullName, email });
 
-    UserDAO.create(fullName, email, password, (err, newUser) => {
+    UserDAO.create(fullName, email, password, 'Standard', (err, newUser) => {
         if (err) {
             console.error('Error during user registration:', err);
             // Respond with a detailed error message

@@ -14,7 +14,7 @@ class UserDAO {
 
     init() {
         const users = [
-            { fullname: 'test1', email: 'test.mail', password: 'test3' }
+            { fullname: 'test1', email: 'test.mail', password: 'test3', type: 'Standard' }
         ];
 
         users.forEach((user) => {
@@ -22,7 +22,6 @@ class UserDAO {
                 if (err) {
                     console.error('Error checking user existence:', err);
                 } else if (!foundUser) {
-                    // Only insert if the user does not already exist
                     this.db.insert(user, function (err) {
                         if (err) {
                             console.log('Cannot insert user:', user.fullname);
@@ -48,28 +47,25 @@ class UserDAO {
             }
         });
     }
-    // Method to create a new user
-    create(fullName, email, password, callback) {
-        // First, let's check if the email is already used by another user
+
+    create(fullName, email, password, type = 'Standard', callback) {
         this.lookup(email, (err, user) => {
             if (user) {
-                // User with this email already exists
                 console.log('Email already in use:', email);
                 return callback(new Error('Email already in use'), null);
             } else {
-                // Hash the password and create the user entry
                 bcrypt.hash(password, saltRounds, (err, hash) => {
                     if (err) {
                         console.error('Error hashing password:', err);
                         return callback(err, null);
                     }
-                    // Create the new user entry
+                    // Ensure that the 'type' parameter is used here
                     const newUser = {
                         fullName: fullName,
                         email: email,
                         password: password,
+                        type: type  // This should set the type correctly
                     };
-                    // Insert the new user into the database
                     this.db.insert(newUser, function (err, addedUser) {
                         if (err) {
                             console.error('Cannot insert user:', email, err);
@@ -81,27 +77,12 @@ class UserDAO {
                     });
                 });
             }
+            
         });
     }
-    
-
-// Method to look up a user by email
-lookup(email, callback) {
-    this.db.find({ email: email }, function (err, users) {
-        if (err) {
-            callback(err, null);
-        } else if (users.length > 0) {
-            callback(null, users[0]); // returns the first user found
-        } else {
-            callback(new Error('User not found'), null);
-        }
-    });
 }
 
-}
 
 const dao = new UserDAO(path.join(__dirname, 'database.db'));
-
 dao.init();
-
 module.exports = dao;

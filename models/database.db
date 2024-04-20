@@ -1,1 +1,5 @@
-{"fullName":"Jamie MacKay","email":"jamiemackay01@gmail.com","password":"123","_id":"PUJ43ODdaWOrun16"}
+{"fullName":"Jamie MacKay","email":"jamiemackay01@gmail.com","password":"$2b$10$oxqebzG1wHwQQh5JPne9s.yF5NnK61Tyn0U299pkpUqzlcJWjFsZi","_id":"80OrjzYQYAUSfgS3"}
+{"fullName":"Jamie","email":"jamiemackay02@gmail.com","password":"123","type":"Standard","_id":"EAZ6C0pKsFQMBxnb"}
+{"fullName":"Pantry","email":"pantry@email.com","password":"123","type":"Pantry","_id":"OHSO8hOpb404mdi5"}
+{"fullname":"test1","email":"test.mail","password":"test3","type":"Standard","_id":"QOWReU4EYhgfjPC4"}
+{"fullName":"Admin","email":"admin@gmail.com","password":"123","type":"Admin","_id":"mCQx4uBCp4GuIL51"}
