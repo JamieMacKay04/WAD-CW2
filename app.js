@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const UserDAO = require('./models/userModel');
+const PantryDAO = require('./models/pantryModel')
 require('dotenv').config();
 const session = require('express-session');
 
@@ -13,7 +14,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'your_secret_key',
+    secret: 'key',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -130,17 +131,69 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/pantry', (req, res) => {
-    res.render('pantry', {
+    if (req.session && req.session.email) {
+        UserDAO.lookup(req.session.email, (err, user) => {
+            if (err) {
+                console.error('Error fetching user:', err);
+                return res.status(500).send("Internal Server Error");
+            }
+            if (!user) {
+                console.error('User not found');
+                return res.redirect('/');  // Redirect to login if user not found
+            }
+
+            // Redirect based on the user type
+            switch (user.type) {
+                case 'Standard':
+                    res.redirect('/pantry-standard');
+                    break;
+                case 'Pantry':
+                    res.redirect('/pantry-pantry');
+                    break;
+                case 'Admin':
+                    res.redirect('/pantry-admin');
+                    break;
+                default:
+                    res.redirect('/');  // Redirect to login page if user type is not recognized
+                    break;
+            }
+        });
+    } else {
+        console.log("No user session found, redirecting to login.");
+        res.redirect('/');
+    }
+});
+
+app.get('/pantry-standard', (req, res) => {
+    res.render('pantry-standard', {
         pageTitle: 'Pantry',
         currentYear: new Date().getFullYear(),
         organizationName: 'Your Organization',
-        isPantry: true
+        isAbout: true
+    });
+});
+
+app.get('/pantry-pantry', (req, res) => {
+    res.render('pantry-pantry', {
+        pageTitle: 'Pantry Management',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isPantry: true // This could be used in your template to conditionally display certain elements
+    });
+});
+
+app.get('/pantry-admin', (req, res) => {
+    res.render('pantry-admin', {
+        pageTitle: 'Pantry Administration',
+        currentYear: new Date().getFullYear(),
+        organizationName: 'Your Organization',
+        isAdmin: true // Similarly, this could be used in your template to conditionally display admin-specific elements
     });
 });
 
 app.get('/profile', (req, res) => {
-    if (req.session && req.session.email) {  // Check if session email exists
-        UserDAO.lookup(req.session.email, (err, user) => {  // Use email to lookup user
+    if (req.session && req.session.email) {
+        UserDAO.lookup(req.session.email, (err, user) => {
             if (err) {
                 console.error('Error fetching user:', err);
                 res.status(500).send("Internal Server Error");
@@ -152,12 +205,12 @@ app.get('/profile', (req, res) => {
                 return;
             }
 
-            // If user is found, render the profile page with user data
+            // Render the profile page with user data
             res.render('profile', {
                 pageTitle: 'Your Profile',
                 fullName: user.fullName,
                 email: user.email,
-                userType: user.userType || 'Standard' // Default to 'Standard' if userType is not defined
+                userType: user.type
             });
         });
     } else {
@@ -165,6 +218,17 @@ app.get('/profile', (req, res) => {
         res.redirect('/');
     }
 });
+
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Failed to destroy the session during logout.', err);
+            return res.status(500).send("Could not log out, server error");
+        }
+        res.redirect('/'); // Redirect to login page
+    });
+});
+
 
 
 // Start the server
