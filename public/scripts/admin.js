@@ -91,3 +91,24 @@ function deleteUserById(userId) {
     })
     .catch(error => console.error('Error deleting user:', error));
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const userCards = document.querySelectorAll('.user-card');
+    
+    userCards.forEach(card => {
+        card.addEventListener('click', function () {
+            const userId = this.getAttribute('data-user-id');
+            deleteUserCard(userId);
+        });
+    });
+});
+
+function deleteUserCard(userId) {
+    const userCard = document.querySelector(`.user-card[data-user-id="${userId}"]`);
+    if (userCard) {
+        userCard.remove();
+    } else {
+        console.error('User card not found');
+    }
+}

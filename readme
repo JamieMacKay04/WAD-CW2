@@ -10,3 +10,4 @@ The features I have implemented are
 - The ability to select items as a pantry, which removes them from the database so other pantries dont take them
 - The ability to delete users and pantry items as an admin
 - Security measures to stop standard users accessing Pantry or Admin views
+- An error 404 page in event of an error that leads users to a page that the website cant find

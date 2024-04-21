@@ -14,3 +14,4 @@
 {"name":"Lamb Chops","weight":500,"sellByDate":"2025-01-30","_id":"VmUg3oWk2c"}
 {"name":"Ham Slice","weight":300,"sellByDate":"2024-07-04","_id":"We5N2c9Rz8"}
 {"name":"Chicken Wings","weight":450,"sellByDate":"2024-09-05","_id":"Ze1K4d6Jy3"}
+{"name":"Test Case Food","weight":"150","sellByDate":"2025-04-22","_id":"kRVIdfpwhrC4OWX8"}
