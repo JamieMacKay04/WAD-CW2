@@ -173,7 +173,7 @@ form button:hover {
 
 .pantry-list {
     width: calc(100% - 40px); /* Adjust width as needed, accounting for padding */
-    max-width: 600px; /* Adjust maximum width as needed */
+    max-width: 90%; /* Adjust maximum width as needed */
     margin: 0 auto; /* Centers the list in the available space */
     padding: 20px; /* Adds some padding around the list */
     text-align: center; /* Aligns the text to the center */
@@ -181,22 +181,30 @@ form button:hover {
 
 .pantry-item {
     background-color: white; /* Provides contrast against the background */
-    margin-bottom: 15px; /* Adds space between items */
-    padding: 20px; /* Adds padding inside each item */
-    border-radius: 10px; /* Rounds the corners of the item cards */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for a 'lifted card' effect */
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+    margin-bottom: 10px; /* Reduced from 15px to bring items closer together */
+    padding: 10px 15px; /* Reduced padding for a more compact layout */
+    border-radius: 8px; /* Slightly reduced for a subtler effect */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Keeping the shadow subtle */
+    transition: transform 0.3s ease; /* Keeping smooth transition for hover effect */
     cursor: pointer;
+    width: 66%; /* Adjust if necessary to define a max-width or specific width */
+    max-width: 540px; /* Adjust this to your preferred max width for better control */
 }
 
 .pantry-item:hover {
-    transform: translateY(-5px); /* Slightly lifts the card up when hovered */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Darker shadow for lifted effect */
+    transform: translateY(-3px); /* Subtly lift the card up when hovered, less than before */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Slightly lighter shadow for lifted effect */
+}
+
+.pantry-item h2, .pantry-item p {
+    color: var(--secondary-color); /* Consistent color for text */
+    font-size: 0.9rem; /* Smaller font size */
+    margin-bottom: 5px; /* Less space between elements */
 }
 
 .pantry-item h2 {
-    color: var(--primary-color); /* Uses the primary color for the item name */
-    margin-bottom: 10px; /* Adds space below the item name */
+    color: var(--primary-color); /* Primary color for headers */
+    font-size: 1.2rem; /* Adjusted size for header */
 }
 
 .pantry-item p {

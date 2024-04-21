@@ -1,33 +1,20 @@
-// main.js
-
-// Function to handle the confirmation of a pantry item
-function confirmItem(itemId) {
-    const userConfirmed = confirm('Would you like to confirm this item?');
-    
-    if (userConfirmed) {
-        console.log('Item confirmed:', itemId);
-        // TODO: Perform your action here, such as sending a confirmation to the server
-        // You could send an AJAX request to the server to mark the item as confirmed
-    } else {
-        console.log('Item confirmation canceled:', itemId);
-    }
-}
-
-// Wait for the DOM to fully load before attaching event listeners
 document.addEventListener('DOMContentLoaded', (event) => {
     // Attach click event listener to each pantry item
     document.querySelectorAll('.pantry-item').forEach(item => {
         item.addEventListener('click', function() {
             const itemId = this.getAttribute('data-item-id');
-            confirmItem(itemId);
+            confirmAndDeleteItem(itemId);
         });
     });
 });
 
-function confirmItem(itemId) {
+// Unified function to handle confirmation and deletion
+function confirmAndDeleteItem(itemId) {
     const userConfirmed = confirm('Would you like to confirm this item?');
     
     if (userConfirmed) {
+        console.log('Item confirmed:', itemId);
+        // Proceed to delete the item
         fetch('/delete-pantry-item/' + itemId, {
             method: 'DELETE'
         })
@@ -45,5 +32,7 @@ function confirmItem(itemId) {
         .catch((error) => {
             console.error('Error:', error);
         });
+    } else {
+        console.log('Item confirmation canceled:', itemId);
     }
 }

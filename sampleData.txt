@@ -1,4 +1,5 @@
-    {"name": "Beef Steak", "weight": 500, "sellByDate": "2024-12-12", "_id": "G0Ejto7cOmssEBBw"},
+Sample Data for pantryItems.db
+ {"name": "Beef Steak", "weight": 500, "sellByDate": "2024-12-12", "_id": "G0Ejto7cOmssEBBw"},
     {"name": "Whole Chicken", "weight": 1200, "sellByDate": "2024-06-01", "_id": "BcEhG7HyM8o"},
     {"name": "Salmon Fillet", "weight": 300, "sellByDate": "2024-05-20", "_id": "JpK8Y0a56zW"},
     {"name": "Pork Ribs", "weight": 800, "sellByDate": "2024-11-15", "_id": "Lq6WnIjyF3"},
@@ -18,3 +19,10 @@
     {"name": "Chicken Wings", "weight": 450, "sellByDate": "2024-09-05", "_id": "Ze1K4d6Jy3"},
     {"name": "Pepperoni", "weight": 200, "sellByDate": "2025-02-20", "_id": "Oo2I1q5Mw6"},
     {"name": "Prosciutto", "weight": 250, "sellByDate": "2025-01-25", "_id": "Me5R7b3Ex8"}
+
+Default Users
+
+{"fullName":"Jamie MacKay","email":"jamiemackay02@gmail.com","password":"123","type":"Standard","_id":"EAZ6C0pKsFQMBxnb"}
+{"fullName":"Pantry","email":"pantry@email.com","password":"123","type":"Pantry","_id":"OHSO8hOpb404mdi5"}
+{"fullname":"test1","email":"test.mail","password":"test3","type":"Standard","_id":"QOWReU4EYhgfjPC4"}
+{"fullName":"Admin","email":"admin@email.com","password":"123","type":"Admin","_id":"mCQx4uBCp4GuIL51"}
