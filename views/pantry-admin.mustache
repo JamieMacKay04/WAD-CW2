@@ -3,30 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/styles/home.css">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles/pantry.css"> <!-- Ensure CSS is linked -->
 </head>
 <body>
     <div class="background">
         <header>
-        <div class="logo-container">
-            <img src="images/Logo.png" alt="Logo">
-        </div>
-
+            <div class="logo-container">
+                <img src="/images/Logo.png" alt="Logo">
+            </div>
             <nav>
                 <ul>
                     <li><a href="/homepage">Home</a></li>
                     <li><a href="/about">About Us</a></li>
                     <li><a href="/contact">Contact Us</a></li>
-                    <li><a class="{{#isPantry}}active{{/isPantry}}" href="/pantry">Pantry</a></li>
+                    <li><a href="/pantry">Pantry</a></li>
                     <li><a href="/profile">Profile</a></li>
                 </ul>
             </nav>
         </header>
-
-            <footer>
-        <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-    </footer>
-    <script src="/scripts/main.js"></script>
+        <div class="admin-container">
+            <div class="admin-section">
+                <h1>Pantry Items</h1>
+                <div class="items-list">
+                    {{#pantryItems}}
+                    <div class="card">
+                        <h2>{{name}}</h2>
+                        <p>Weight: {{weight}}g</p>
+                        <p>Sell By Date: {{sellByDate}}</p>
+                    </div>
+                    {{/pantryItems}}
+                </div>
+            </div>
+            <div class="admin-section">
+                <h1>Users</h1>
+                <div class="users-list">
+                    {{#users}}
+                    <div class="card">
+                        <h2>{{fullName}}</h2>
+                        <p>Email: {{email}}</p>
+                        <p>User Type: {{type}}</p>
+                    </div>
+                    {{/users}}
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="/scripts/admin.js"></script>
 </body>
 </html>
