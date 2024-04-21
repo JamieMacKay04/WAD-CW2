@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Attach click event listener to each pantry item
-    document.querySelectorAll('.pantry-item').forEach(item => {
+document.addEventListener('DOMContentLoaded', () => {
+    // Selects both .pantry-item and .pantry-item-admin classes
+    document.querySelectorAll('.pantry-item, .pantry-item-admin').forEach(item => {
         item.addEventListener('click', function() {
             const itemId = this.getAttribute('data-item-id');
             confirmAndDeleteItem(itemId);
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // Unified function to handle confirmation and deletion
 function confirmAndDeleteItem(itemId) {
-    const userConfirmed = confirm('Would you like to confirm this item?');
+    const userConfirmed = confirm('Ensure this is the item you are meaning to select, then press confirm');
     
     if (userConfirmed) {
         console.log('Item confirmed:', itemId);

@@ -12,6 +12,16 @@ class UserDAO {
         }
     }
 
+    getAllUsers(callback) {
+        this.db.find({}, (err, users) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, users);
+            }
+        });
+    }
+
     init() {
         const users = [
             { fullname: 'test1', email: 'test.mail', password: 'test3', type: 'Standard' }
@@ -80,6 +90,19 @@ class UserDAO {
             
         });
     }
+
+    deleteById(id, callback) {
+        this.db.remove({ _id: id }, {}, (err, numRemoved) => {
+            if (err) {
+                callback(err);
+            } else if (numRemoved === 0) {
+                callback(new Error('User not found'));
+            } else {
+                callback(null);
+            }
+        });
+    }
+    
 }
 
 

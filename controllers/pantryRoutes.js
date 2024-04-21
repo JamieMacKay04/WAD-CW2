@@ -18,22 +18,4 @@ router.get('/pantry-pantry', (req, res) => {
         }
     });
 });
-
-// pantryRoutes.js
-
-router.delete('/delete-pantry-item/:id', (req, res) => {
-    const itemId = req.params.id;
-
-    pantryDB.remove({ _id: itemId }, {}, (err, numRemoved) => {
-        if (err) {
-            console.error('Error removing item:', err);
-            res.status(500).send('Error removing item.');
-        } else {
-            console.log('Item removed:', itemId);
-            res.json({ message: 'Item removed', itemId: itemId });
-        }
-    });
-});
-
-
 module.exports = router;

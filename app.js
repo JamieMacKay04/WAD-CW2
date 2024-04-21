@@ -11,9 +11,13 @@ const Datastore = require('nedb');
 const pantryDB = new Datastore({ filename: './models/pantryItems.db', autoload: true });
 const pantryRoutes = require('./controllers/pantryRoutes');
 
+
+
+
 const app = express();
 
 app.use('/', pantryRoutes);
+
 
 // Use bodyParser middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -206,14 +210,59 @@ app.get('/pantry-pantry', (req, res) => {
     });
 });
 
+// Pantry Admin Route with date filtering
 app.get('/pantry-admin', (req, res) => {
-    res.render('pantry-admin', {
-        pageTitle: 'Pantry Administration',
-        currentYear: new Date().getFullYear(),
-        organizationName: 'Your Organization',
-        isAdmin: true // Similarly, this could be used in your template to conditionally display admin-specific elements
+    if (req.session && req.session.email) {  // Ensure there's a user session
+        UserDAO.lookup(req.session.email, (err, user) => {
+            if (err) {
+                console.error('Error fetching user:', err);
+                return res.status(500).send("Internal Server Error");
+            }
+            if (!user) {
+                console.error('User not found');
+                return res.redirect('/');  // Redirect to login if user not found
+            }
+            if (user.type !== 'Admin') {
+                console.error('Unauthorized access attempt by non-admin user');
+                return res.status(403).send("Unauthorized Access");
+            }
+
+            const today = new Date().toISOString().split('T')[0];  // Format today's date as YYYY-MM-DD
+            pantryDB.find({ expDate: { $gt: today } }, (err, items) => {
+                if (err) {
+                    console.error('Error fetching pantry items:', err);
+                    return res.status(500).send("Internal Server Error");
+                }
+                // Render the pantry-admin view with the filtered items
+                res.render('pantry-admin', {
+                    pageTitle: 'Pantry Administration',
+                    currentYear: new Date().getFullYear(),
+                    organizationName: 'Your Organization',
+                    pantryItems: items,  // 'pantryItems' will be an array of items with future expiration dates
+                    isAdmin: true  // Ensure that admin-specific UI elements can be shown
+                });
+            });
+        });
+    } else {
+        console.log("No user session found, redirecting to login.");
+        res.redirect('/');
+    }
+});
+
+app.delete('/admin-users/:id', (req, res) => {
+    const userId = req.params.id;
+    UserDAO.deleteById(userId, (err) => {
+        if (err) {
+            console.error('Error deleting user:', err);
+            res.status(500).send('Internal Server Error');
+        } else {
+            res.status(204).send(); // No content to send after successful deletion
+        }
     });
 });
+
+
+
 
 app.get('/profile', (req, res) => {
     if (req.session && req.session.email) {
@@ -239,6 +288,79 @@ app.get('/profile', (req, res) => {
         });
     } else {
         // If no email in session, redirect to login page
+        res.redirect('/');
+    }
+});
+
+app.get('/admin-pantry', (req, res) => {
+    // First, check if the session exists and a user is logged in
+    if (req.session && req.session.email) {
+        UserDAO.lookup(req.session.email, (err, user) => {
+            if (err) {
+                console.error('Error fetching user:', err);
+                return res.status(500).send("Internal Server Error");
+            }
+            if (!user) {
+                console.error('User not found');
+                return res.redirect('/'); // Redirect to login if user not found
+            }
+
+            // Check if the user is an admin
+            if (user.type !== 'Admin') {
+                console.error('Access denied: User is not an admin');
+                return res.status(403).send("Access Denied");
+            }
+
+            // Fetch all items from the database
+            pantryDB.find({}, (err, items) => {
+                if (err) {
+                    console.error('Error fetching pantry items:', err);
+                    res.status(500).send("Internal Server Error");
+                } else {
+                    // Render the admin-pantry.mustache view, passing it the items
+                    res.render('admin-pantry', {
+                        pageTitle: 'Admin Pantry Overview',
+                        pantryItems: items  // 'pantryItems' will be an array of items from the database
+                    });
+                }
+            });
+        });
+    } else {
+        console.log("No user session found, redirecting to login.");
+        res.redirect('/');
+    }
+});
+
+app.get('/admin-users', (req, res) => {
+    // Ensure that only an admin user can access this page
+    if (req.session && req.session.email) {
+        UserDAO.lookup(req.session.email, (err, user) => {
+            if (err) {
+                console.error('Error fetching user during session check:', err);
+                return res.status(500).send("Internal Server Error");
+            }
+            if (!user || user.type !== 'Admin') {
+                console.error('Access attempt to admin-users by non-admin user or no user found.');
+                return res.redirect('/');  // Redirect to login if user not found or not admin
+            }
+
+            // Fetch all users for the admin page
+            UserDAO.getAllUsers((err, users) => {
+                if (err) {
+                    console.error('Error fetching users:', err);
+                    return res.status(500).send("Internal Server Error");
+                }
+
+                res.render('admin-users', {
+                    pageTitle: 'User Management',
+                    users: users, // 'users' should be an array of user objects
+                    currentYear: new Date().getFullYear(),
+                    organizationName: 'Your Organization' // Replace with your actual organization name
+                });
+            });
+        });
+    } else {
+        // If no session or email is not set in session, redirect to login page
         res.redirect('/');
     }
 });

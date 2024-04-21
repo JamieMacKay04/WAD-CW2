@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/styles/pantry.css"> <!-- Ensure CSS is linked -->
+    <link rel="stylesheet" href="/styles/users.css">
 </head>
 <body>
     <div class="background">
@@ -17,22 +17,29 @@
                     <li><a href="/homepage">Home</a></li>
                     <li><a href="/about">About Us</a></li>
                     <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/pantry">Pantry</a></li>
+                    <li><a class="active" href="/pantry">Pantry</a></li>
                     <li><a href="/profile">Profile</a></li>
                 </ul>
             </nav>
         </header>
-        <div class="admin-container">
-            <div class="admin-section">
-                <a href="/admin-pantry" class="admin-link">Remove Pantry Items</a>
+       
+    <div class="user-list">
+        <h1 class="remove-users-title">Remove Users</h1>
+        <div class="user-cards-container">
+            {{#users}}
+            <div class="user-card" data-user-id="{{id}}">
+                <h2>{{fullName}}</h2>
+                <p>User Type: {{type}}</p>
+                <!-- Remove the delete button -->
             </div>
-            <div class="admin-section">
-                <a href="/admin-users" class="admin-link">Remove Users</a>
-            </div>
+            {{/users}}
         </div>
-        <footer>
-            <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-        </footer>
+    </div>
+</div>
+
+
+
+
     </div>
     <script src="/scripts/admin.js"></script>
 </body>

@@ -207,7 +207,6 @@ form button:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Darker shadow on hover */
 }
 
-
 .pantry-item h2, .pantry-item p {
     color: var(--secondary-color); /* Consistent color for text */
     font-size: 0.9rem; /* Smaller font size */
@@ -301,3 +300,73 @@ header {
     align-items: flex-start;
     justify-content: space-between;
 }
+
+.admin-container {
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    align-items: center; /* Aligns the buttons vertically */
+    height: 60vh; /* Full height to spread out the content */
+    padding: 20px; /* Outer padding for better spacing from edges */
+}
+
+.admin-section {
+    width: 40%; /* Larger width for each section */
+    margin: 0 50px; /* More space between the two sections */
+}
+
+.admin-link {
+    display: block; /* Make each link a block for easier sizing */
+    background-color: var(--primary-color);
+    color: white;
+    padding: 40px 60px; /* Significantly larger padding */
+    font-size: 32px; /* Larger font size for visibility */
+    text-decoration: none;
+    border-radius: 10px; /* Smoothed corners */
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* More pronounced shadow for depth */
+    text-align: center; /* Ensures text is centered */
+}
+
+.admin-link:hover{
+
+    transform: scale(1.1); /* Slight scale up on hover */
+
+}
+
+.pantry-item-admin {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    width: calc(33% - 20px); /* Adjust as necessary for layout */
+    margin-bottom: 20px;
+}
+
+.pantry-item-admin:hover {
+    transform: scale(1.1); /* Slight scale up on hover */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Darker shadow on hover */
+    outline: 2px solid red; /* Red outline */
+    outline-offset: -2px; /* Adjust the offset to match design needs */
+}
+
+
+.pantry-item-admin h2, .pantry-item-admin p {
+    color: var(--secondary-color); /* Consistent color for text */
+    font-size: 0.9rem; /* Smaller font size */
+    margin-bottom: 5px; /* Less space between elements */
+}
+
+.pantry-item-admin h2 {
+    color: var(--primary-color); /* Primary color for headers */
+    font-size: 1.2rem; /* Adjusted size for header */
+}
+
+.pantry-item-admin p {
+    color: var(--secondary-color); /* Secondary color for item details */
+    font-size: 1rem; /* Adjust size as needed */
+    margin-bottom: 5px; /* Adds space between paragraphs */
+}
+
+
