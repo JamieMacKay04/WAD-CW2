@@ -88,71 +88,26 @@ nav a.active {
     text-decoration: underline; /* Underline active text */
 }
 
+/* Footer styles */
+footer {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
 
-/* Logo styles */
+footer p { color: black;}
+
 .logo-container {
     position: absolute;
     top: 1rem;
     left: 2rem;
+    margin: 10px; /* Adjust margin as needed */
 }
 
 .logo-container img {
-    width: 100px;
-}
-
-h1 {
-
-    text-align: center;
-    color: white;
-    padding-bottom: 2rem;
-    font-size: 5rem;
-}
-
-.form-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: var(--primary-color);
-    z-index: 100;
-    border-radius: 30px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
-}
-
-label {
-    margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-textarea {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    padding: 10px 20px;
-    background-color: white;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 66%;
-    margin-left: 17%;
-}
-
-form button:hover {
-    background-color: var(--secondary-color);
-    transform: scale(1.2);
+    width: 100px; /* Adjust width as needed */
+    height: auto;
 }

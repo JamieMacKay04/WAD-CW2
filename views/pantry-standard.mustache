@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="/styles/pantry.css">
 </head>
 <body>
     <div class="background">
         <header>
-        <div class="logo-container">
-            <img src="images/Logo.png" alt="Logo">
-        </div>
-
+            <div class="logo-container">
+                <img src="images/Logo.png" alt="Logo">
+            </div>
             <nav>
                 <ul>
                     <li><a href="/homepage">Home</a></li>
@@ -24,9 +23,30 @@
             </nav>
         </header>
 
-            <footer>
-        <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-    </footer>
+        <div class="form-container">
+            <form action="/submit-pantry-item" method="POST" style="text-align: center;">
+                <h2>Add New Item</h2>
+                <br><br>
+                <label for="itemName">Item Name:</label>
+                <br>
+                <input type="text" id="itemName" name="itemName" required><br>
+
+                <label for="itemWeight">Weight (g):</label>
+                <br>
+                <input type="number" id="weight" name="weight" required><br>
+
+                <label for="sellByDate">Sell By Date:</label>
+                <br>
+                <input type="date" id="expDate" name="expDate" required><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <footer>
+            <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
+        </footer>
+    </div>
     <script src="/scripts/main.js"></script>
 </body>
 </html>

@@ -7,8 +7,13 @@ const UserDAO = require('./models/userModel');
 const PantryDAO = require('./models/pantryModel')
 require('dotenv').config();
 const session = require('express-session');
+const Datastore = require('nedb');
+const pantryDB = new Datastore({ filename: './models/pantryItems.db', autoload: true });
+const pantryRoutes = require('./controllers/pantryRoutes');
 
 const app = express();
+
+app.use('/', pantryRoutes);
 
 // Use bodyParser middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -173,6 +178,25 @@ app.get('/pantry-standard', (req, res) => {
     });
 });
 
+app.post('/submit-pantry-item', (req, res) => {
+    const { itemName, weight, expDate } = req.body;
+    const item = {
+        name: itemName,
+        weight: weight,
+        sellByDate: expDate,
+    };
+
+    pantryDB.insert(item, function(err, newDoc) {
+        if (err) {
+            console.error('Error inserting item:', err);
+            res.status(500).send('Error saving item.');
+        } else {
+            console.log('Item added:', newDoc);
+            res.redirect('/pantry-standard');  // Redirect back to the form page or to a success page
+        }
+    });
+});
+
 app.get('/pantry-pantry', (req, res) => {
     res.render('pantry-pantry', {
         pageTitle: 'Pantry Management',
@@ -228,8 +252,6 @@ app.post('/logout', (req, res) => {
         res.redirect('/'); // Redirect to login page
     });
 });
-
-
 
 // Start the server
 const PORT = process.env.PORT || 3000;
