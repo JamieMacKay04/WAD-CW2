@@ -1,0 +1,32 @@
+const Datastore = require('nedb');
+const pantryDB = new Datastore({ filename: './models/pantryItems.db', autoload: true });
+
+const items = [
+    {"name": "Beef Steak", "weight": 500, "sellByDate": "2024-12-12", "_id": "G0Ejto7cOmssEBBw"},
+    {"name": "Whole Chicken", "weight": 1200, "sellByDate": "2024-06-01", "_id": "BcEhG7HyM8o"},
+    {"name": "Salmon Fillet", "weight": 300, "sellByDate": "2024-05-20", "_id": "JpK8Y0a56zW"},
+    {"name": "Pork Ribs", "weight": 800, "sellByDate": "2024-11-15", "_id": "Lq6WnIjyF3"},
+    {"name": "Tuna Steak", "weight": 250, "sellByDate": "2024-07-22", "_id": "Qs9EfXqVr1"},
+    {"name": "Lamb Chops", "weight": 500, "sellByDate": "2025-01-30", "_id": "VmUg3oWk2c"},
+    {"name": "Bacon", "weight": 200, "sellByDate": "2024-08-16", "_id": "Sg5L8k1Na7"},
+    {"name": "Ground Beef", "weight": 600, "sellByDate": "2024-10-03", "_id": "Ft7B9o0Dz5"},
+    {"name": "Sausages", "weight": 400, "sellByDate": "2024-09-19", "_id": "Vb2Jk7Lz4C"},
+    {"name": "Turkey Breast", "weight": 1500, "sellByDate": "2024-12-25", "_id": "Ka6N8y2IvQ"},
+    {"name": "Duck", "weight": 1500, "sellByDate": "2024-12-10", "_id": "MvQh3p6Wx1"},
+    {"name": "Rabbit", "weight": 700, "sellByDate": "2024-12-18", "_id": "Qj4Y9f8Ks3"},
+    {"name": "Venison", "weight": 500, "sellByDate": "2025-03-15", "_id": "Uh2W0s7Fb9"},
+    {"name": "Buffalo Wings", "weight": 350, "sellByDate": "2024-08-09", "_id": "Ko3M8e2Hy4"},
+    {"name": "Ham Slice", "weight": 300, "sellByDate": "2024-07-04", "_id": "We5N2c9Rz8"},
+    {"name": "Beef Brisket", "weight": 900, "sellByDate": "2024-12-01", "_id": "To6L3p1Vb7"},
+    {"name": "Mutton Leg", "weight": 1000, "sellByDate": "2024-06-15", "_id": "He9N0t4Fx2"},
+    {"name": "Chicken Wings", "weight": 450, "sellByDate": "2024-09-05", "_id": "Ze1K4d6Jy3"},
+    {"name": "Pepperoni", "weight": 200, "sellByDate": "2025-02-20", "_id": "Oo2I1q5Mw6"},
+    {"name": "Prosciutto", "weight": 250, "sellByDate": "2025-01-25", "_id": "Me5R7b3Ex8"}
+];
+
+items.forEach(item => {
+    pantryDB.insert(item, (err, newDoc) => {
+        if (err) console.log("Error inserting item:", err);
+        else console.log("Item inserted:", newDoc);
+    });
+});

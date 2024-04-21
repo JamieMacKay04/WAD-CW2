@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/styles/pantry.css">
+    <title>Pantry Inventory</title>
+    <link rel="stylesheet" href="/styles/pantry.css"> <!-- Ensure this path is correct -->
 </head>
+<body>
     <div class="background">
         <header>
-        <div class="logo-container">
-            <img src="images/Logo.png" alt="Logo">
-        </div>
-
+            <div class="logo-container">
+                <img src="/images/Logo.png" alt="Logo">
+            </div>
             <nav>
                 <ul>
                     <li><a href="/homepage">Home</a></li>
                     <li><a href="/about">About Us</a></li>
                     <li><a href="/contact">Contact Us</a></li>
-                    <li><a class="{{#isPantry}}active{{/isPantry}}" href="/pantry">Pantry</a></li>
+                    <li><a class="active" href="/pantry">Pantry</a></li>
                     <li><a href="/profile">Profile</a></li>
                 </ul>
             </nav>
         </header>
-
-<body>
-
- <div class="pantry-list">
-
-        <h2>Pantry Inventory</h2>
-        {{#pantryItems}}
-<div class="pantry-item" data-item-id="{{_id}}" onclick="confirmItem('{{_id}}')">
-    <h2>{{name}}</h2>
-    <p>Weight: {{weight}}g</p>
-    <p>Sell By Date: {{sellByDate}}</p>
-</div>
-
-        {{/pantryItems}}
+        <h1 class="inventory-header">Pantry Inventory</h1>
+        <div class="pantry-list">
+            {{#pantryItems}}
+            <div class="pantry-item" data-item-id="{{_id}}">
+                <h2>{{name}}</h2>
+                <p>Weight: {{weight}}g</p>
+                <p>Sell By Date: {{sellByDate}}</p>
+            </div>
+            {{/pantryItems}}
+        </div>
     </div>
-
-            <footer>
-        <p>&copy; {{currentYear}} {{organizationName}}. All rights reserved.</p>
-    </footer>
-    <script src="/scripts/main.js"></script>
+    <script src="/scripts/main.js"></script> <!-- Ensure this path is correct -->
 </body>
 </html>
