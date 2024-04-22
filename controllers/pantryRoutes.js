@@ -18,4 +18,22 @@ router.get('/pantry-pantry', (req, res) => {
         }
     });
 });
+
+router.delete('/delete-pantry-item/:id', (req, res) => {
+    const itemId = req.params.id;
+    pantryDB.remove({ _id: itemId }, {}, (err, numRemoved) => {
+      if (err) {
+        console.error('Error removing item:', err);
+        return res.status(500).send('Error removing item.');
+      }
+      if (numRemoved > 0) {
+        console.log('Item removed:', itemId);
+        res.status(200).send({ success: true });
+      } else {
+        res.status(404).send({ error: 'Item not found' });
+      }
+    });
+  });
+  
+  module.exports = router;
 module.exports = router;

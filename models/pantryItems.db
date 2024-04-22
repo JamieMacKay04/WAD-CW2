@@ -1,6 +1,6 @@
 {"name":"Whole Chicken","weight":1200,"sellByDate":"2024-06-01","_id":"BcEhG7HyM8o"}
+{"name":"Chicken Thigh","weight":"12","sellByDate":"2024-05-26","_id":"DvuIT3ItzLq9X84Z"}
 {"name":"Beef Steak","weight":500,"sellByDate":"2024-12-12","_id":"G0Ejto7cOmssEBBw"}
-{"name":"Mutton Leg","weight":1000,"sellByDate":"2024-06-15","_id":"He9N0t4Fx2"}
 {"name":"Salmon Fillet","weight":300,"sellByDate":"2024-05-20","_id":"JpK8Y0a56zW"}
 {"name":"Turkey Breast","weight":1500,"sellByDate":"2024-12-25","_id":"Ka6N8y2IvQ"}
 {"name":"Pork Ribs","weight":800,"sellByDate":"2024-11-15","_id":"Lq6WnIjyF3"}
@@ -15,3 +15,6 @@
 {"name":"Ham Slice","weight":300,"sellByDate":"2024-07-04","_id":"We5N2c9Rz8"}
 {"name":"Chicken Wings","weight":450,"sellByDate":"2024-09-05","_id":"Ze1K4d6Jy3"}
 {"name":"Test Case Food","weight":"150","sellByDate":"2025-04-22","_id":"kRVIdfpwhrC4OWX8"}
+{"name":"Chicken Thigh","weight":"300","sellByDate":"2024-06-26","_id":"WomGCs6NfOIIyzu2"}
+{"$$deleted":true,"_id":"Ka6N8y2IvQ"}
+{"$$deleted":true,"_id":"BcEhG7HyM8o"}
